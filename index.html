@@ -44,11 +44,35 @@
       color: #fff;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     }
+    h1 {
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
     p, li {
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     }
+    .intro {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    .closing {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .signature {
+      font-weight: bold;
+      margin-top: 10px;
+    }
     ol, ul {
       padding-left: 20px;
+    }
+    ol ol {
+      margin-top: 8px;
+      margin-bottom: 8px;
     }
     .start-button {
       background: linear-gradient(135deg, #4CAF50, #45a049);
@@ -59,7 +83,7 @@
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 30px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       transition: all 0.3s ease;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
@@ -76,27 +100,31 @@
 </head>
 <body>
   <div class="content">
-    <h1>Velkommen til Clever AI - vores nye AI-assistent på Clever.dk</h1>
-    <p>Tusinde tak fordi du vil hjælpe os med at gøre den endnu bedre!</p>
-    <h3>Sådan udfører du testen:</h3>
+    <h1>Velkommen til Clever AI</h1>
+    <p class="intro">Vores nye AI-assistent på Clever.dk - tusinde tak fordi du vil hjælpe os med at gøre den endnu bedre!</p>
+    
+    <h2>Sådan udfører du testen:</h2>
     <ol>
       <li>Tryk på 'Start her' for at åbne chatten.</li>
-      <li>Stil alle de spørgsmål, som du vil ønske var nemmere selv at finde svaret på. Det kan være alt fra helt generelle spørgsmål eller konkrete udfordringer som du har oplevet i hverdagen.</li>
-      <li>Hvis du får et svar du ikke er tilfredse med, så giver I chatten et <strong>thumbs down</strong>.
+      <li>Stil alle de spørgsmål, som du gerne vil have nemmere adgang til svar på. Det kan være alt fra helt generelle spørgsmål til konkrete udfordringer som du har oplevet i hverdagen.</li>
+      <li>Hvis du får et svar du ikke er tilfreds med, så giv chatten et <strong>thumbs down</strong>:
         <ol>
-          <li>Tryk på <strong>krydset</strong> i øverste højre hjørne,</li>
-          <li><strong>tryk thumbs down</strong> og skriv <strong>en kommentar</strong> på, hvorfor det ikke var et godt svar</li>
+          <li>Tryk på <strong>krydset</strong> i øverste højre hjørne</li>
+          <li><strong>Tryk thumbs down</strong> og skriv <strong>en kommentar</strong> om, hvorfor det ikke var et godt svar</li>
           <li><strong>Klik på pilen</strong> og så er den sendt til os!</li>
         </ol>
       </li>
-      <li><strong>Refresh siden</strong> (tryk ctrl + r eller genindlæs hjemmesiden) for at starte en ny chat.
+      <li><strong>Genindlæs siden</strong> (tryk Ctrl + R) for at starte en ny samtale:
         <ol>
-          <li>Det kan du også gøre, hvis du skifter emne meget, her kan en AI blive en anelse forvirret - så prøv endelig at genindlæse siden og stil dit spørgsmål igen.</li>
+          <li>Dette kan du også gøre hvis du skifter emne meget, da AI'en så kan blive forvirret. Prøv derfor gerne at genindlæse siden og stil dit spørgsmål igen.</li>
         </ol>
       </li>
     </ol>
-    <h3>Vi ser frem til at læse jeres samtale og feedback!</h3>
-    <h2>Bedste hilsner Clever AI team</h2>
+    
+    <div class="closing">
+      <p>Vi ser frem til at læse din samtale og feedback!</p>
+      <p class="signature">Bedste hilsner<br>Clever AI team</p>
+    </div>
     
     <button onclick="openChat()" class="start-button">
       🚀 Start her
