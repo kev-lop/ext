@@ -19,7 +19,6 @@
       filter: blur(2px) brightness(0.8);
       z-index: -2;
     }
-
     body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
@@ -33,7 +32,6 @@
       z-index: 1;
       position: relative;
     }
-
     .content {
       background-color: rgba(0, 0, 0, 0.6);
       padding: 30px;
@@ -42,18 +40,37 @@
       width: 100%;
       box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
-
     h1, h2, h3 {
       color: #fff;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     }
-
     p, li {
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     }
-
     ol, ul {
       padding-left: 20px;
+    }
+    .start-button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .start-button:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+    .start-button:active {
+      transform: translateY(0px);
     }
   </style>
 </head>
@@ -61,7 +78,6 @@
   <div class="content">
     <h1>Velkommen til Clevers nye eksterne AI-assistent!</h1>
     <p>Vores nye interne AI-assistent er sat i verden for at hjælpe dig med hurtigere at få svar på dine spørgsmål</p>
-
     <h3>Sådan gør du:</h3>
     <ol>
       <li>Tryk på 'Start her' for at åbne chatten.</li>
@@ -69,32 +85,42 @@
       <li>Hvis den ikke helt forstår, hvad du mener, så prøv at omformulere, giv lidt mere kontekst, eller genindlæs siden og spørg igen.</li>
       <li>Hvis du får et dårligt svar, så husk at:
         <ul>
-          <li>Rate med ’thumbs down’</li>
+          <li>Rate med 'thumbs down'</li>
           <li>Skriv en kommentar om, hvad svaret manglede.</li>
         </ul>
       </li>
     </ol>
-
     <h3>Er det kritisk?</h3>
     <ul>
       <li>Kom forbi flyverpladserne, eller giv feedbacken direkte videre til Pernille, Kosovare eller Sine fra AI-teamet.</li>
     </ul>
-
     <h2>God spørgelyst!</h2>
+    
+    <button onclick="openChat()" class="start-button">
+      🚀 Start her
+    </button>
   </div>
 
-<!-- Boost.ai Chat Widget with default launcher -->
-<script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
-<script>
-  // Initialize og vis chat widget automatisk
-  var boost = window.boostInit("clever-ext");
-  
-  // Åbn chat widget efter kort delay for at sikre alt er loadet
-  setTimeout(function() {
-    if (window.boost && window.boost.chatPanel) {
-      window.boost.chatPanel.show();
+  <!-- Boost.ai Chat Widget with default launcher -->
+  <script src="https://clever-int.boost.ai/chatPanel/chatPanel.js"></script>
+  <script>
+    var boost = window.boostInit("clever-int", {
+        startLanguage: "da-DK",
+        showLauncher: true,
+        chatPanel: {
+            settings: {
+                openTextLinksInNewTab: true
+            }
+        }
+    });
+
+    function openChat() {
+      if (window.boost && window.boost.chatPanel) {
+        window.boost.chatPanel.show();
+      } else {
+        console.log('Boost.ai chat panel not ready yet');
+      }
     }
-  }, 500);
-</script>
+  </script>
 </body>
 </html>
