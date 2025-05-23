@@ -83,10 +83,18 @@
     <h2>God spørgelyst!</h2>
   </div>
 
-  <!-- Boost.ai Chat Widget with default launcher -->
-  <script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
+<!-- Boost.ai Chat Widget with default launcher -->
+<script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
 <script>
+  // Initialize og vis chat widget automatisk
   var boost = window.boostInit("clever-ext");
+  
+  // Åbn chat widget efter kort delay for at sikre alt er loadet
+  setTimeout(function() {
+    if (window.boost && window.boost.chatPanel) {
+      window.boost.chatPanel.show();
+    }
+  }, 500);
 </script>
 </body>
 </html>
