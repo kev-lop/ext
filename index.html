@@ -144,6 +144,17 @@
         }
     });
 
+    // Lyt til når samtale-ID ændres (ny samtale startes)
+    boost.chatPanel.addEventListener("conversationIdChanged", function(event) {
+        console.log("Ny samtale startet med ID:", event.detail.conversationId);
+        // Her kunne du vise en notifikation til brugeren
+    });
+
+    // Lyt til når chatten lukkes (kontekst mistes)
+    boost.chatPanel.addEventListener("chatPanelClosed", function() {
+        console.log("Chat blev lukket - kontekst vil blive nulstillet ved næste åbning");
+    });
+
     function openChat() {
       if (window.boost && window.boost.chatPanel) {
         window.boost.chatPanel.show();
