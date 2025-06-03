@@ -155,6 +155,35 @@
         console.log("Chat blev lukket - kontekst vil blive nulstillet ved næste åbning");
     });
 
+    // === INAKTIVITETS-TIMEOUT SYSTEM ===
+    // Trigger en advarsel efter 2 minutter uden aktivitet
+    const durationBeforeTimeout = 120000; // 2 minutter i millisekunder
+    const timeoutActionId = 3002; // Skal matches med Action ID i Boost.ai Admin Panel
+    var timeoutNotTriggered = true; // Sikrer at advarslen kun vises én gang
+
+    const resetInactivityTimer = () => {
+        clearTimeout(window.chatTimeoutId);
+        window.chatTimeoutId = setTimeout(() => {
+            if (timeoutNotTriggered) {
+                // Trigger en "Du har været inaktiv" besked fra chatten
+                boost.chatPanel.triggerAction(timeoutActionId);
+                timeoutNotTriggered = false;
+                console.log("Inaktivitets-advarsel sendt til brugeren");
+            }
+        }, durationBeforeTimeout);
+    };
+
+    // Reset timer ved bruger-aktivitet
+    boost.chatPanel.addEventListener('messageSent', resetInactivityTimer);
+    boost.chatPanel.addEventListener('actionLinkClicked', resetInactivityTimer);
+    boost.chatPanel.addEventListener('externalLinkClicked', resetInactivityTimer);
+    
+    // Start timer når chatten åbnes
+    boost.chatPanel.addEventListener('chatPanelOpened', () => {
+        timeoutNotTriggered = true; // Reset for ny session
+        resetInactivityTimer();
+    });
+
     function openChat() {
       if (window.boost && window.boost.chatPanel) {
         window.boost.chatPanel.show();
