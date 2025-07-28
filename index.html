@@ -1,46 +1,139 @@
-<script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
-<script>
-  var boost = window.boostInit("clever-ext", {
-      chatPanel: {
-          settings: {
-              startLanguage: "da-DK",
-              openTextLinksInNewTab: true
-          }
-      }
-  });
-
-  function openChat() {
-    if (window.boost && window.boost.chatPanel) {
-      window.boost.chatPanel.show();
-    } else {
-      console.log('Boost.ai chat panel not ready yet');
-      setTimeout(openChat, 500);
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clever Ekstern AI-assistent</title>
+  <style>
+    /* Din originale CSS - behold den som den er */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url('./baggrund.png') no-repeat center center; 
+      background-size: cover;
+      filter: blur(2px) brightness(0.8);
+      z-index: -2;
     }
-  }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+      z-index: 1;
+      position: relative;
+    }
+    .content {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    h1, h2, h3 {
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    p, li {
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    }
+    .intro {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+    .closing {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .signature {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    ol, ul {
+      padding-left: 20px;
+    }
+    ol ol {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .start-button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .start-button:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+    .start-button:active {
+      transform: translateY(0px);
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Velkommen til Clever AI</h1>
+    <p class="intro">Vores nye AI-assistent på Clever.dk - tusinde tak fordi du vil hjælpe os med at gøre den endnu bedre!</p>
+  </div>
 
-  // Auto-åbn chat hvis brugeren kommer fra SMS
-  function checkAndOpenChat() {
+  <!-- Boost.ai Chat Widget - DIN ORIGINALE KODE -->
+  <script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
+  <script>
+    var boost = window.boostInit("clever-ext", {
+        startLanguage: "da-DK",
+        showLauncher: true,
+        chatPanel: {
+            settings: {
+                openTextLinksInNewTab: true
+            }
+        }
+    });
+
+    function openChat() {
+      if (window.boost && window.boost.chatPanel) {
+        window.boost.chatPanel.show();
+      } else {
+        console.log('Boost.ai chat panel not ready yet');
+      }
+    }
+
+    // Auto-åbn chat hvis brugeren kommer fra SMS
     var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('source') === 'sms' || urlParams.get('fra') === 'sms') {
-      console.log('SMS bruger detekteret - åbner chat automatisk');
-      openChat();
+      // Vent lidt så chatten kan initialisere først
+      setTimeout(function() {
+        openChat();
+      }, 1000);
     }
-  }
-
-  // Start når siden er loaded
-  window.addEventListener('load', function() {
-    setTimeout(checkAndOpenChat, 1500);
-  });
-
-  // Test knap - tilføj midlertidigt for at teste
-  setTimeout(function() {
-    var testButton = document.createElement('button');
-    testButton.innerHTML = 'Test Chat';
-    testButton.style.position = 'fixed';
-    testButton.style.bottom = '20px';
-    testButton.style.right = '20px';
-    testButton.style.zIndex = '99999';
-    testButton.onclick = openChat;
-    document.body.appendChild(testButton);
-  }, 2000);
-</script>
+  </script>
+  
+</body>
+</html>
