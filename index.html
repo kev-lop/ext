@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clever Ekstern AI-assistent</title>
   <style>
-    /* Din originale CSS - behold den som den er */
+    /* Din originale CSS */
     body::before {
       content: "";
       position: fixed;
@@ -96,6 +96,21 @@
     .start-button:active {
       transform: translateY(0px);
     }
+    
+    /* TEST KNAP STYLING */
+    .test-chat-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: red;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 99999;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -104,9 +119,14 @@
     <p class="intro">Vores nye AI-assistent på Clever.dk - tusinde tak fordi du vil hjælpe os med at gøre den endnu bedre!</p>
   </div>
 
-  <!-- Boost.ai Chat Widget - DIN ORIGINALE KODE -->
+  <!-- TEST KNAP - FJERN DENNE SENERE -->
+  <button class="test-chat-btn" onclick="testChat()">TEST CHAT</button>
+
+  <!-- Boost.ai Chat Widget -->
   <script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
   <script>
+    console.log('Script starting...');
+    
     var boost = window.boostInit("clever-ext", {
         startLanguage: "da-DK",
         showLauncher: true,
@@ -117,22 +137,42 @@
         }
     });
 
+    console.log('Boost initialized:', boost);
+
     function openChat() {
+      console.log('openChat called');
       if (window.boost && window.boost.chatPanel) {
+        console.log('Opening chat panel...');
         window.boost.chatPanel.show();
       } else {
         console.log('Boost.ai chat panel not ready yet');
       }
     }
 
+    function testChat() {
+      console.log('Test button clicked');
+      console.log('window.boost:', window.boost);
+      if (window.boost && window.boost.chatPanel) {
+        console.log('Chat panel exists, trying to show...');
+        window.boost.chatPanel.show();
+      } else {
+        console.log('Chat panel not found!');
+      }
+    }
+
     // Auto-åbn chat hvis brugeren kommer fra SMS
     var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('source') === 'sms' || urlParams.get('fra') === 'sms') {
-      // Vent lidt så chatten kan initialisere først
+      console.log('SMS user detected');
       setTimeout(function() {
         openChat();
       }, 1000);
     }
+
+    // Test efter 3 sekunder
+    setTimeout(function() {
+      console.log('3 second test - boost object:', window.boost);
+    }, 3000);
   </script>
   
 </body>
