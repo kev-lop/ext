@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clever Ekstern AI-assistent</title>
   <style>
-    /* Baggrund med mørkt overlay og blur */
+    /* Din eksisterende CSS - perfekt som den er */
     body::before {
       content: "";
       position: fixed;
@@ -102,39 +102,45 @@
   <div class="content">
     <h1>Velkommen til Clever AI</h1>
     <p class="intro">Vores nye AI-assistent på Clever.dk - tusinde tak fordi du vil hjælpe os med at gøre den endnu bedre!</p>
-   
   </div>
 
-  <!-- Boost.ai Chat Widget with default launcher -->
-<script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
-<script>
-  var boost = window.boostInit("clever-ext", {
-      startLanguage: "da-DK",
-      showLauncher: true,
-      chatPanel: {
-          settings: {
-              openTextLinksInNewTab: true
-          }
+  <!-- Boost.ai Chat Widget -->
+  <script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
+  <script>
+    var boost = window.boostInit("clever-ext", {
+        startLanguage: "da-DK",
+        showLauncher: true,
+        chatPanel: {
+            settings: {
+                openTextLinksInNewTab: true
+            }
+        }
+    });
+
+    function openChat() {
+      if (window.boost && window.boost.chatPanel) {
+        window.boost.chatPanel.show();
+      } else {
+        console.log('Boost.ai chat panel not ready yet');
+        // Prøv igen efter kort tid hvis chatten ikke er klar
+        setTimeout(openChat, 500);
       }
-  });
-
-  function openChat() {
-    if (window.boost && window.boost.chatPanel) {
-      window.boost.chatPanel.show();
-    } else {
-      console.log('Boost.ai chat panel not ready yet');
     }
-  }
 
-  // Auto-åbn chat hvis brugeren kommer fra SMS
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('source') === 'sms' || urlParams.get('fra') === 'sms') {
-    // Vent lidt så chatten kan initialisere først
-    setTimeout(function() {
-      openChat();
-    }, 1000);
-  }
-</script>
+    // Auto-åbn chat hvis brugeren kommer fra SMS
+    function checkAndOpenChat() {
+      var urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('source') === 'sms' || urlParams.get('fra') === 'sms') {
+        console.log('SMS bruger detekteret - åbner chat automatisk');
+        openChat();
+      }
+    }
+
+    // Start når siden er loaded
+    window.addEventListener('load', function() {
+      setTimeout(checkAndOpenChat, 1500); // Øget til 1.5 sekunder for at sikre chat er klar
+    });
+  </script>
   
 </body>
 </html>
