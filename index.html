@@ -132,64 +132,35 @@
   </div>
 
   <!-- Boost.ai Chat Widget with default launcher -->
-  <script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
-  <script>
-    var boost = window.boostInit("clever-ext", {
-        startLanguage: "da-DK",
-        showLauncher: true,
-        chatPanel: {
-            settings: {
-                openTextLinksInNewTab: true
-            }
-        }
-    });
-
-    // Lyt til når samtale-ID ændres (ny samtale startes)
-    boost.chatPanel.addEventListener("conversationIdChanged", function(event) {
-        console.log("Ny samtale startet med ID:", event.detail.conversationId);
-    });
-
-    // Lyt til når chatten lukkes (kontekst mistes)
-    boost.chatPanel.addEventListener("chatPanelClosed", function() {
-        console.log("Chat blev lukket - kontekst vil blive nulstillet ved næste åbning");
-    });
-
-    // === INAKTIVITETS-TIMEOUT SYSTEM ===
-    // Trigger en advarsel efter 12 minutter uden aktivitet
-    const durationBeforeTimeout = 720000; // 12 minutter i millisekunder
-    const timeoutActionId = 3027; // Skal matches med Action ID i Boost.ai Admin Panel
-    var timeoutNotTriggered = true; // Sikrer at advarslen kun vises én gang
-
-    const resetInactivityTimer = () => {
-        clearTimeout(window.chatTimeoutId);
-        window.chatTimeoutId = setTimeout(() => {
-            if (timeoutNotTriggered) {
-                // Trigger en "Du har været inaktiv" besked fra chatten
-                boost.chatPanel.triggerAction(timeoutActionId);
-                timeoutNotTriggered = false;
-                console.log("Inaktivitets-advarsel sendt til brugeren");
-            }
-        }, durationBeforeTimeout);
-    };
-
-    // Reset timer ved bruger-aktivitet
-    boost.chatPanel.addEventListener('messageSent', resetInactivityTimer);
-    boost.chatPanel.addEventListener('actionLinkClicked', resetInactivityTimer);
-    boost.chatPanel.addEventListener('externalLinkClicked', resetInactivityTimer);
-    
-    // Start timer når chatten åbnes
-    boost.chatPanel.addEventListener('chatPanelOpened', () => {
-        timeoutNotTriggered = true; // Reset for ny session
-        resetInactivityTimer();
-    });
-
-    function openChat() {
-      if (window.boost && window.boost.chatPanel) {
-        window.boost.chatPanel.show();
-      } else {
-        console.log('Boost.ai chat panel not ready yet');
+<script src="https://clever-ext.boost.ai/chatPanel/chatPanel.js"></script>
+<script>
+  var boost = window.boostInit("clever-ext", {
+      startLanguage: "da-DK",
+      showLauncher: true,
+      chatPanel: {
+          settings: {
+              openTextLinksInNewTab: true
+          }
       }
+  });
+
+  function openChat() {
+    if (window.boost && window.boost.chatPanel) {
+      window.boost.chatPanel.show();
+    } else {
+      console.log('Boost.ai chat panel not ready yet');
     }
-  </script>
+  }
+
+  // Auto-åbn chat hvis brugeren kommer fra SMS
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('source') === 'sms' || urlParams.get('fra') === 'sms') {
+    // Vent lidt så chatten kan initialisere først
+    setTimeout(function() {
+      openChat();
+    }, 1000);
+  }
+</script>
+  
 </body>
 </html>
